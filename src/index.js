@@ -9,7 +9,7 @@ import {
   Route, 
 } from "react-router-dom";
 
-import { AddClient } from './routes/AddClient';
+import { AgregarPaciente } from './routes/AgregarPaciente';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +17,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />
-        <Route path='/agregar-paciente' element={<AddClient />} />
+        <Route path='/agregar-paciente' element={<AgregarPaciente />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

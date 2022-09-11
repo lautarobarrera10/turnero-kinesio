@@ -5,12 +5,13 @@ const CustomDateInput = ({
     day,
     onChangeDay,
     month,
+    monthInNumber,
     onChangeMonth,
     year,
     onChangeYear,
     añoInicial, 
     añoFinal, 
-    id
+    id,
 }) => {
 
     // Opciones en inputs
@@ -35,6 +36,11 @@ const CustomDateInput = ({
     const años = [];
     for (let index = añoInicial; index <= añoFinal; index++) {
         años.push(index) 
+    }
+
+    let monthInNumberTransformed;
+    if (monthInNumber && !month) {
+        monthInNumberTransformed = meses[monthInNumber];
     }
 
   return (
@@ -68,7 +74,7 @@ const CustomDateInput = ({
                 <Select
                 labelId="month-label"
                 id="month"
-                value={month}
+                value={month || monthInNumberTransformed}
                 label="Mes"
                 onChange={onChangeMonth}
                 >

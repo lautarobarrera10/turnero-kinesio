@@ -1,7 +1,7 @@
 import React from 'react'
 
-const useItem = () => {
-    const [item, setItem] = React.useState('');
+const useItem = (initialState) => {
+    const [item, setItem] = React.useState(initialState || '');
 
     const onChangeItem = (event) => {
         setItem(event.target.value);

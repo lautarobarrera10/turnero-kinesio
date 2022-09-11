@@ -1,5 +1,5 @@
 import React from "react";
-import './AddClient.css';
+import './AgregarPaciente.css';
 import { Navbar } from '../../components/Navbar';
 
 import { CustomDateInput } from '../../components/CustomDateInput';
@@ -31,7 +31,7 @@ for (let index = 1920; index < 2023; index++) {
     añosNacimiento.push(index) 
 }
 
-function AddClient() {
+function AgregarPaciente() {
     // Custom HOC para fecha de hoy
     const {
     day: todayDay,
@@ -46,7 +46,7 @@ function AddClient() {
     const {
         item: profesionalName,
         onChangeItem: onChangeProfesionalName
-    } = useItem();
+    } = useItem('Campidoglio Nicolás');
 
     // Custom HOC para nombre del paciente
     const {
@@ -176,13 +176,18 @@ function AddClient() {
         console.log(pacienteNuevo)
     }
 
+    // Fecha de hoy
+    const fecha = new Date();
+    const hoy = fecha.getDate();
+    const mesActual = fecha.getMonth(); 
+    const añoActual = fecha.getFullYear();
+
     return(
         <React.Fragment>
         <Navbar />
         <Container>
         <form>
             <h1 className="ficha-kinesica-title">Ficha Kinesica</h1>
-            <p className="ficha-kinesica-number"><b>N°: </b>0000 0000 0000 0001</p>
             <hr id="ficha-kinesica-first-divider"/>
             {/* Contenedor de fecha y nombre del profesional*/}
             <Container sx={{
@@ -193,11 +198,11 @@ function AddClient() {
                 gap:5
             }}>
                 <CustomDateInput 
-                    day={todayDay}
+                    day={hoy}
                     onChangeDay={onChangeTodayDay}
-                    month={todayMonth}
+                    monthInNumber={mesActual}
                     onChangeMonth={onChangeTodayMonth}
-                    year={todayYear}
+                    year={añoActual}
                     onChangeYear={onChangeTodayYear}
                     añoInicial={2022} 
                     añoFinal={2032} 
@@ -434,4 +439,4 @@ function AddClient() {
     );
 }
 
-export { AddClient }
+export { AgregarPaciente }

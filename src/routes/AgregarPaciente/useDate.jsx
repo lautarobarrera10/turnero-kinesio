@@ -4,7 +4,7 @@ const useDate = () => {
     // Estados
     const [day, setDay] = React.useState(1);
     const [month, setMonth] = React.useState('Enero');
-    const [year, setYear] = React.useState(2022);
+    const [year, setYear] = React.useState(2000);
     
     // Funciones actualizadoras de estado
     const onChangeDay = (event) => {

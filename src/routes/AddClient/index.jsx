@@ -2,313 +2,431 @@ import React from "react";
 import './AddClient.css';
 import { Navbar } from '../../components/Navbar';
 
-import { Container, Box, FormControl, Autocomplete, TextField, Input, InputLabel, Select, MenuItem } from '@mui/material';
+import { CustomDateInput } from '../../components/CustomDateInput';
+import { CustomSelectInput } from '../../components/CustomSelectInput';
 
-const obrasSociales = ['ospla', 'osfatlyf', 'otra'];
+import { 
+    Container, 
+    Box, 
+    TextField, 
+    Switch, 
+    FormControlLabel, 
+    FormGroup,
+    TextareaAutosize,
+    Button
+} from '@mui/material';
+
+// Customs HOCs
+import { useDate } from "./useDate";
+import { useItem } from "./useItem";
+import { useAntecedentesPersonales } from "./useAntecedentesPersonales";
+
+
 const edades = [];
-for (let index = 8; index < 100; index++) {
+for (let index = 12; index < 100; index++) {
     edades.push(index) 
 } 
-const dias = [];
-for (let index = 1; index < 32; index++) {
-    dias.push(index) 
-} 
-const meses = [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre'
-];
-
-const años = [];
-for (let index = 2022; index < 2033; index++) {
-    años.push(index) 
+const añosNacimiento = [];
+for (let index = 1920; index < 2023; index++) {
+    añosNacimiento.push(index) 
 }
 
 function AddClient() {
-    const [age, setAge] = React.useState(18);
-    const [day, setDay] = React.useState(1);
-    const [month, setMonth] = React.useState('Enero');
-    const [year, setYear] = React.useState(2022);
-    const [profesionalName, setProfesionalName] = React.useState('');
-    const [pacienteName, setPacienteName] = React.useState('');
-    const [pacienteLocalidad, setPacienteLocalidad] = React.useState('');
+    // Custom HOC para fecha de hoy
+    const {
+    day: todayDay,
+    onChangeDay: onChangeTodayDay,
+    month: todayMonth,
+    onChangeMonth: onChangeTodayMonth,
+    year: todayYear,
+    onChangeYear: onChangeTodayYear
+    } = useDate();
 
-    const handleChangeAge= (event) => {
-        setAge(event.target.value);
-    };
-    const handleChangeDay = (event) => {
-        setDay(event.target.value);
-    };
-    const handleChangeMonth = (event) => {
-        setMonth(event.target.value);
-    };
-    const handleChangeYear = (event) => {
-        setYear(event.target.value);
-    };
-    const handleChangeProfesionalName = (event) => {
-        setProfesionalName(event.target.value);
+    // Custom HOC para nombre del profesional
+    const {
+        item: profesionalName,
+        onChangeItem: onChangeProfesionalName
+    } = useItem();
+
+    // Custom HOC para nombre del paciente
+    const {
+        item: pacienteName,
+        onChangeItem: onChangePacienteName
+    } = useItem();
+
+    // Custom HOC para obra social del paciente
+    const {
+        item: pacienteObraSocial,
+        onChangeItem: onChangePacienteObraSocial
+    } = useItem();
+
+    // Custom HOC para número de afiliado del paciente
+    const {
+        item: pacienteNumeroDeAfiliado,
+        onChangeItem: onChangePacienteNumeroDeAfiliado
+    } = useItem();
+
+    // Custom HOC para domicilio del paciente
+    const {
+        item: pacienteDomicilio,
+        onChangeItem: onChangePacienteDomicilio
+    } = useItem();
+
+    // Custom HOC para localidad del paciente
+    const {
+        item: pacienteLocalidad,
+        onChangeItem: onChangePacienteLocalidad
+    } = useItem();
+
+    // Custom HOC para código postal del paciente
+    const {
+        item: pacienteCodigoPostal,
+        onChangeItem: onChangePacienteCodigoPostal
+    } = useItem();
+
+    // Custom HOC para teléfono del paciente
+    const {
+        item: pacienteTelefono,
+        onChangeItem: onChangePacienteTelefono
+    } = useItem();
+
+    // Custom HOC para DNI del paciente
+    const {
+        item: pacienteDNI,
+        onChangeItem: onChangePacienteDNI
+    } = useItem();
+
+    // Custom HOC para edad del paciente
+    const {
+        item: pacienteEdad,
+        onChangeItem: onChangePacienteEdad
+    } = useItem();
+
+    // Custom HOC para fecha de nacimiento del paciente
+    const {
+        day: pacienteNacimientoDia,
+        onChangeDay: onChangePacienteNacimientoDia,
+        month: pacienteNacimientoMes,
+        onChangeMonth: onChangePacienteNacimientoMes,
+        year: pacienteNacimientoAño,
+        onChangeYear: onChangePacienteNacimientoAño
+    } = useDate();
+
+    // Custom HOC para antecedentes personales del paciente
+    const {
+        diabetes, 
+        onChangeDiabetes,
+        hipertension,
+        onChangeHipertension,
+        fumador,
+        onChangeFumador,
+        cardiaco,
+        onChangeCardiaco,
+        embarazo,
+        onChangeEmbarazo,
+        artrosis,
+        onChangeArtrosis,
+        artritis,
+        onChangeArtritis,
+        marcapasos,
+        onChangeMarcapasos,
+        usaProtesis,
+        onChangeUsaProtesis,
+        reemplazoCaderaDerecha,
+        onChangeReemplazoCaderaDerecha,
+        reemplazoCaderaIzquierda,
+        onChangeReemplazoCaderaIzquierda
+    } = useAntecedentesPersonales();
+
+    // Custom HOC para antecedentes familiares del paciente
+    const {
+        item: pacienteAntecedentesFamiliares,
+        onChangeItem: onChangePacienteAntecedentesFamiliares
+    } = useItem();
+
+    const agregarPaciente = () => {
+        const pacienteNuevo = {
+            'fecha': `${todayDay} de ${todayMonth} de ${todayYear}`,
+            'profesionalName': profesionalName,
+            'pacienteName': pacienteName,
+            'pacienteObraSocial': pacienteObraSocial,
+            'pacienteNumeroDeAfiliado': pacienteNumeroDeAfiliado,
+            'pacienteDomicilio': pacienteDomicilio,
+            'pacienteLocalidad': pacienteLocalidad,
+            'pacienteCodigoPostal': pacienteCodigoPostal,
+            'pacienteTelefono': pacienteTelefono,
+            'pacienteDNI': pacienteDNI,
+            'pacienteEdad': pacienteEdad,
+            'pacienteFechaDeNacimiento': `${pacienteNacimientoDia} de ${pacienteNacimientoMes} de ${pacienteNacimientoAño}`,
+            'pacienteAntecedentesPersonales': {
+                'diabetes': diabetes,
+                'hipertension': hipertension,
+                'fumador': fumador,
+                'cardiaco': cardiaco,
+                'embarazo': embarazo,
+                'artrosis': artrosis,
+                'artritis': artritis,
+                'marcapasos': marcapasos,
+                'usaProtesis': usaProtesis,
+                'reemplazoCaderaDerecha': reemplazoCaderaDerecha,
+                'reemplazoCaderaIzquierda': reemplazoCaderaIzquierda
+            },
+            'pacienteAntecedentesFamiliares': pacienteAntecedentesFamiliares
+        }
+        console.log(pacienteNuevo)
     }
-    const handleChangePacienteName = (event) => {
-        setPacienteName(event.target.value);
-    }
-    const handleChangePacienteLocalidad = (event) => {
-        setPacienteLocalidad(event.target.value);
-    }
+
     return(
         <React.Fragment>
         <Navbar />
         <Container>
         <form>
-            <h2 className="ficha-kinesica-title">Ficha Kinesica</h2>
-            <hr/>
-            {/* Contenedor de fecha y número de ficha kinesica */}
+            <h1 className="ficha-kinesica-title">Ficha Kinesica</h1>
+            <p className="ficha-kinesica-number"><b>N°: </b>0000 0000 0000 0001</p>
+            <hr id="ficha-kinesica-first-divider"/>
+            {/* Contenedor de fecha y nombre del profesional*/}
             <Container sx={{
-                my:2,
                 display:'flex',
-                justifyContent:'space-between',
                 alignItems:'flex-start',
-                flexWrap:'wrap'
+                justifyContent:'center',
+                flexWrap:'wrap',
+                gap:5
             }}>
-                {/* Contenedor de fecha */}
-                <Box sx={{
-                    width:'300px',
-                    display:'flex',
-                    textAlign:'center',
-                    gap:1
-                    }}>
-                        {/* Contenedor de día */}
-                        <Box>
-                            <FormControl>
-                            <InputLabel htmlFor="day" id="day-label">Día</InputLabel>
-                            <Select
-                            labelId="day-label"
-                            id="day"
-                            value={day}
-                            label="Día"
-                            onChange={handleChangeDay}
-                            >
-                            {dias.map(dia => (
-                                <MenuItem key={dia} value={dia}>{dia}</MenuItem>
-                            ))}
-                            </Select>
-                            </FormControl>
-                        </Box>
-                        {/* Contenedor de mes */}
-                        <Box>
-                            <FormControl>
-                            <InputLabel htmlFor="month" id="month-label">Mes</InputLabel>
-                            <Select
-                            labelId="month-label"
-                            id="month"
-                            value={month}
-                            label="Mes"
-                            onChange={handleChangeMonth}
-                            >
-                            {meses.map(mes => (
-                                <MenuItem key={mes} value={mes}>{mes}</MenuItem>
-                            ))}
-                            </Select>
-                            </FormControl>
-                        </Box>
-                        {/* Contenedor de año */}
-                        <Box>
-                            <FormControl>
-                            <InputLabel htmlFor="year" id="year-label">Año</InputLabel>
-                            <Select
-                            labelId="year-label"
-                            id="year"
-                            value={year}
-                            label="Año"
-                            onChange={handleChangeYear}
-                            >
-                            {años.map(año => (
-                                <MenuItem key={año} value={año}>{año}</MenuItem>
-                            ))}
-                            </Select>
-                            </FormControl>
-                        </Box>
-                </Box>
-
-                {/* Contenedor del número de ficha kinesica */}
-                <Box sx={{
-                    width:'300px',
-                    display:'flex',
-                    alignItems:'flex-end'
-                }}>
-                    <FormControl sx={{width:'100%'}}>
-                    <InputLabel htmlFor="ficha-number">Número de ficha</InputLabel>
-                    <Input id="ficha-number" type="number"/>
-                    </FormControl>
-                </Box>
-            </Container>
-            {/* Contenedor del nombre del profesional*/}
-            <Container sx={{my:2}}>
-                <Box>
-                <InputLabel id="profesional-name">Apellido y nombre del profesional</InputLabel>
-                <Select
-                sx={{width:'100%'}}
-                labelId="profesional-name"
-                id="profesional-name-select"
-                value={profesionalName}
-                label="Apellido y nombre del profesional"
-                onChange={handleChangeProfesionalName}
-                >
-                <MenuItem value={'Campidoglio Nicolás'}>Campidoglio Nicolás</MenuItem>
-                <MenuItem value={'Barrera Lautaro'}>Barrera Lautaro</MenuItem>
-                </Select>
-                </Box>
+                <CustomDateInput 
+                    day={todayDay}
+                    onChangeDay={onChangeTodayDay}
+                    month={todayMonth}
+                    onChangeMonth={onChangeTodayMonth}
+                    year={todayYear}
+                    onChangeYear={onChangeTodayYear}
+                    añoInicial={2022} 
+                    añoFinal={2032} 
+                    id="today-date"
+                />
+                <CustomSelectInput 
+                    item={profesionalName}
+                    onChangeItem={onChangeProfesionalName}
+                    label={'Nombre del profesional'}
+                    options={['Campidoglio Nicolás']}
+                    id={'profesional-name'}
+                />
             </Container>
             <hr/>
-            {/* Contenedor del nombre del paciente, obra social, número de afiliado, domicilio */}
+            <h2 className="ficha-kinesica-title">Datos del paciente</h2>
+            {/* Contenedor de datos del paciente */}
             <Container sx={{
                 display:'flex',
                 flexWrap:'wrap',
-                justifyContent:'space-between',
-                gap:2
+                justifyContent:'center',
+                gap:5
             }}> 
                 {/* Nombre del paciente */}
-                <Box sx={{
-                    width:'320px'
-                }}>
-                    <FormControl sx={{width:'100%'}}>
-                    <InputLabel htmlFor="paciente-name">Nombre del paciente</InputLabel>
-                    <Input value={pacienteName} id="paciente-name" type="text" onChange={handleChangePacienteName}/>
-                    </FormControl>
-                </Box>
+                <TextField 
+                    value={pacienteName}
+                    onChange={onChangePacienteName}
+                    id="paciente-name" 
+                    label="Nombre y apellido" 
+                    variant="outlined" 
+                    sx={{width:'320px'}} 
+                    type="text" 
+                />
                 {/* Obra social */}
-                <Box sx={{
-                    width:'320px'
-                }}>
-                    <Autocomplete
-                    disablePortal
-                    id="afiliate-obra-social"
-                    sx={{height:'40px'}}
-                    options={obrasSociales}
-                    renderInput={(params) => <TextField {...params} label="Obra social" />}
+                <CustomSelectInput 
+                    item={pacienteObraSocial}
+                    onChangeItem={onChangePacienteObraSocial}
+                    label={'Obra social'}
+                    options={['AMBAR', 'OSECAC', 'ATSA-OSPSA']}
+                    id={'paciente-obra-social'}
+                />
+                {/* Número de afiliado */}
+                <TextField 
+                    value={pacienteNumeroDeAfiliado}
+                    onChange={onChangePacienteNumeroDeAfiliado}
+                    id="paciente-numero-afiliado" 
+                    label="Número de afiliado" 
+                    variant="outlined" 
+                    sx={{width:'320px'}} 
+                    type="number"
+                />
+                {/* Domicilio */}
+                <TextField 
+                    value={pacienteDomicilio}
+                    onChange={onChangePacienteDomicilio}
+                    id="paciente-domicilio" 
+                    label="Domicilio" 
+                    variant="outlined" 
+                    sx={{width:'320px'}} 
+                    type="text"
+                />
+                {/* Localidad */}
+                <CustomSelectInput 
+                    item={pacienteLocalidad}
+                    onChangeItem={onChangePacienteLocalidad}
+                    label={'Localidad'}
+                    options={['Cipolletti', 'Fernández Oro', 'Cinco Saltos']}
+                    id={'paciente-localidad'}
+                />
+                {/* Código postal */}
+                <TextField 
+                    value={pacienteCodigoPostal}
+                    onChange={onChangePacienteCodigoPostal}
+                    id="paciente-codigo-postal" 
+                    label="Código postal" 
+                    variant="outlined" 
+                    sx={{width:'320px'}} 
+                    type="number"
+                />
+                {/* Teléfono */}
+                <TextField
+                    value={pacienteTelefono}
+                    onChange={onChangePacienteTelefono}
+                    id="paciente-telefono" 
+                    label="Teléfono" 
+                    variant="outlined" 
+                    sx={{width:'320px'}} 
+                    type="number"
+                />
+                {/* DNI */}
+                <TextField 
+                    value={pacienteDNI}
+                    onChange={onChangePacienteDNI}
+                    id="paciente-dni" 
+                    label="DNI" 
+                    variant="outlined" 
+                    sx={{width:'320px'}} 
+                    type="number"
+                />
+                {/* Edad */}
+                <CustomSelectInput 
+                    item={pacienteEdad}
+                    onChangeItem={onChangePacienteEdad}
+                    label={'Edad'}
+                    options={edades}
+                    id={'paciente-edad'}
+                />
+                {/* Fecha de nacimiento */}
+                <Box sx={{width:'320px'}}>
+                    <h3 className="ficha-kinesica-title">Fecha de nacimiento</h3>
+                    <CustomDateInput
+                        day={pacienteNacimientoDia}
+                        onChangeDay={onChangePacienteNacimientoDia}
+                        month={pacienteNacimientoMes}
+                        onChangeMonth={onChangePacienteNacimientoMes}
+                        year={pacienteNacimientoAño}
+                        onChangeYear={onChangePacienteNacimientoAño}
+                        añoInicial={1922} 
+                        añoFinal={2022} 
+                        id="today-date"
                     />
                 </Box>
-                {/* Número de afiliado */}
-                <Box sx={{
-                    width:'320px'
-                }}>
-                    <FormControl sx={{width:'100%'}}>
-                    <InputLabel htmlFor="afiliate-number">Número de afiliado</InputLabel>
-                    <Input id="afiliate-number" type="number"/>
-                    </FormControl>
+                {/* Antecedentes personales */}
+                <FormGroup sx={{width:'100%'}}>
+                    <h3 className="ficha-kinesica-title">Antecedentes personales</h3>
+                    <Box sx={{display:'flex', flexWrap:'wrap', justifyContent:'center', gap:1}}>
+                        {/* Diabetes */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Diabetes'}
+                            onChange={onChangeDiabetes}
+                        />
+                        {/* Hipertensión */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Hipertensión'}
+                            value={hipertension}
+                            onChange={onChangeHipertension}
+                        />
+                        {/* Fumador */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Fumador'}
+                            value={fumador}
+                            onChange={onChangeFumador}
+                        />
+                        {/* Cardíaco */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Cardíaco'}
+                            value={cardiaco}
+                            onChange={onChangeCardiaco}
+                        />
+                        {/* Embarazo */}
+                        <FormControlLabel
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Embarazo'}
+                            value={embarazo}
+                            onChange={onChangeEmbarazo}
+                        />
+                        {/* Artrosis */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Artrosis'}
+                            value={artrosis}
+                            onChange={onChangeArtrosis}
+                        />
+                        {/* Artritis */}
+                        <FormControlLabel
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Artritis'}
+                            value={artritis}
+                            onChange={onChangeArtritis}
+                        />
+                        {/* Marcapasos */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Marcapasos'}
+                            value={marcapasos}
+                            onChange={onChangeMarcapasos}
+                        />
+                        {/* Usa prótesis */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Usa prótesis'}
+                            value={usaProtesis}
+                            onChange={onChangeUsaProtesis}
+                        />
+                        {/* Reemplazo de cadera derecha */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Reemplazo de cadera derecha'}
+                            value={reemplazoCaderaDerecha}
+                            onChange={onChangeReemplazoCaderaDerecha}
+                        />
+                        {/* Reemplazo de cadera izquierda */}
+                        <FormControlLabel 
+                            sx={{width:'320px'}} 
+                            control={<Switch />} 
+                            label={'Reemplazo de cadera izquierda'}
+                            value={reemplazoCaderaIzquierda}
+                            onChange={onChangeReemplazoCaderaIzquierda}
+                        />
+                    </Box>
+                </FormGroup>
+                {/* Antecedentes familiares */}
+                <Box sx={{width:'100%'}}>
+                <h3 className="ficha-kinesica-title">Antecedentes familiares</h3>
+                <TextareaAutosize
+                    id="paciente-antecedentes-familiares"
+                    aria-label="minimum height"
+                    minRows={5}
+                    placeholder="Antecedentes familiares"
+                    style={{ padding:'8px', width:'100%', fontFamily:'Roboto', fontSize:'16px', textIndent:'12px'}}
+                    value={pacienteAntecedentesFamiliares}
+                    onChange={onChangePacienteAntecedentesFamiliares}
+                />
                 </Box>
-                {/* Domicilio */}
-                <Box sx={{
-                    width:'320px'
-                }}>
-                    <FormControl sx={{width:'100%'}}>
-                    <InputLabel htmlFor="paciente-domicilio">Domicilio</InputLabel>
-                    <Input id="paciente-domicilio" type="text"/>
-                    </FormControl>
-                </Box>
-                {/* Localidad */}
-                <Box sx={{
-                    width:'320px'
-                }}>
-                    <InputLabel id="paciente-localidad">Localidad</InputLabel>
-                    <Select
-                    sx={{width:'100%'}}
-                    labelId="localidad"
-                    id="localidad-select"
-                    value={pacienteLocalidad}
-                    label="Localidad"
-                    onChange={handleChangePacienteLocalidad}
-                    >
-                    <MenuItem value={'Cipolletti'}>Cipolletti</MenuItem>
-                    <MenuItem value={'Fernández Oro'}>Fernández Oro</MenuItem>
-                    </Select>
-                </Box>
-            </Container>
-            {/* Contenedor de domicilio, localidad y cp */}
-            <Container sx={{
-                my:2,
-                display:'flex',
-                flexWrap:'wrap',
-                alignItems:'flex-end',
-                gap:1
-            }}>
-                <Box sx={{width:'394px'}}>
-                    <label className="kinesica-number-label" htmlFor="domicilio">Domicilio</label>
-                    <input className="input" id="domicilio" type="text" />
-                </Box>
-                <Box sx={{width:'394px'}}>
-                    <label className="kinesica-number-label" htmlFor="ciudad">Localidad</label>
-                    <input className="input" id="ciudad" type="text" />
-                </Box>
-                <Box sx={{width:'300px'}}>
-                    <label className="kinesica-number-label" htmlFor="codigo-postal">Código postal</label>
-                    <input className="input" id="codigo-postal" type="number" />
-                </Box>
-            </Container>
-            {/* Contenedor de telefono particular y telefono celular */}
-            <Container sx={{
-                my:2,
-                display:'flex',
-                gap:1
-            }}>
-                {/* Contenedor de teléfono particular */}
-                <Box sx={{width:'50%'}}>
-                    <label 
-                    className="kinesica-number-label" htmlFor="afiliate-telefono-particular">
-                        Teléfono particular
-                    </label>
-                    <input className="input" id="afiliate-telefono-particular" type="number" />
-                </Box>
-                {/* Contenedor de teléfono celular */}
-                <Box sx={{width:'50%'}}>
-                    <label 
-                    className="kinesica-number-label" htmlFor="afiliate-telefono-celular">
-                        Teléfono celular
-                    </label>
-                    <input className="input" id="afiliate-telefono-celular" type="number" />
-                </Box>
-            </Container>
-            {/* Contenedor de fecha de nacimiento, edad y dni */}
-            <Container sx={{
-                my:2,
-                display:'flex',
-                flexWrap:'wrap',
-                gap:1
-            }}>
-                <Box sx={{width:'394px'}}>
-                    <label className="kinesica-number-label" htmlFor="nacimiento">
-                        Fecha de nacimiento
-                    </label>
-                    <input className="input" id="nacimiento" type="date" />
-                </Box>
-                <Box sx={{width:'394px'}}>
-                <InputLabel id="demo-simple-select-label">Edad</InputLabel>
-                <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age}
-                label="Edad"
-                onChange={handleChangeAge}
-                >
-                {edades.map(edad => (
-                    <MenuItem key={edad} value={edad}>{edad}</MenuItem>
-                ))}
-                </Select>
-                </Box>
-                <Box sx={{width:'300px'}}>
-                    <label className="kinesica-number-label" htmlFor="dni">
-                        DNI
-                    </label>
-                    <input className="input" id="dni" type="number" />
-                </Box>          
+                <Button type="button" onClick={agregarPaciente} sx={{mb:4, width:'200px'}} variant="contained">Registrar paciente</Button>
+
             </Container>
         </form> 
         </Container>

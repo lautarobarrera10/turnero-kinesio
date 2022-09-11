@@ -5,6 +5,17 @@
 }
 
 .ficha-kinesica-title {
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h1.ficha-kinesica-title {
+    margin-bottom: 8px;
+}
+
+.ficha-kinesica-number {
+    margin: 0;
     text-transform: uppercase;
     text-align: center;
 }
@@ -14,4 +25,8 @@
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
+}
+
+#ficha-kinesica-first-divider {
+    margin-top: 18px;
 }

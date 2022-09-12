@@ -1,6 +1,5 @@
 import React from "react";
 import './AgregarPaciente.css';
-import { Navbar } from '../../components/Navbar';
 
 import { CustomDateInput } from '../../components/CustomDateInput';
 import { CustomSelectInput } from '../../components/CustomSelectInput';
@@ -184,7 +183,6 @@ function AgregarPaciente() {
 
     return(
         <React.Fragment>
-        <Navbar />
         <Container>
         <form>
             <h1 className="ficha-kinesica-title">Ficha Kinesica</h1>
@@ -234,6 +232,7 @@ function AgregarPaciente() {
                     variant="outlined" 
                     sx={{width:'320px'}} 
                     type="text" 
+                    required={true}
                 />
                 {/* Obra social */}
                 <CustomSelectInput 
@@ -262,6 +261,7 @@ function AgregarPaciente() {
                     variant="outlined" 
                     sx={{width:'320px'}} 
                     type="text"
+                    required={true}
                 />
                 {/* Localidad */}
                 <CustomSelectInput 
@@ -280,6 +280,7 @@ function AgregarPaciente() {
                     variant="outlined" 
                     sx={{width:'320px'}} 
                     type="number"
+                    required={true}
                 />
                 {/* Teléfono */}
                 <TextField
@@ -290,6 +291,7 @@ function AgregarPaciente() {
                     variant="outlined" 
                     sx={{width:'320px'}} 
                     type="number"
+                    required={true}
                 />
                 {/* DNI */}
                 <TextField 
@@ -300,6 +302,7 @@ function AgregarPaciente() {
                     variant="outlined" 
                     sx={{width:'320px'}} 
                     type="number"
+                    required={true}
                 />
                 {/* Edad */}
                 <CustomSelectInput 

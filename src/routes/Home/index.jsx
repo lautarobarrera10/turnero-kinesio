@@ -1,9 +1,8 @@
 import React from "react";
-import { Container, Stack, Box } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { textTransform } from "@mui/system";
 
-function Calendar() {
+function Home () {
   const dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
   const horarios= [
     '15:00',
@@ -65,4 +64,4 @@ function Calendar() {
     );
 }
 
-export { Calendar }
+export { Home }

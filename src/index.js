@@ -3,23 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { 
-  BrowserRouter,
-  Routes,
-  Route, 
-} from "react-router-dom";
-
-import { AgregarPaciente } from './routes/AgregarPaciente';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/agregar-paciente' element={<AgregarPaciente />} />
-      </Routes>
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );
 

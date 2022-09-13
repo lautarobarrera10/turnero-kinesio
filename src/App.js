@@ -4,14 +4,14 @@ import { Home } from './routes/Home';
 import { AgregarPaciente } from './routes/AgregarPaciente';
 
 import { 
-  BrowserRouter,
+  HashRouter,
   Routes,
   Route, 
 } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="App">
         <Navbar />
         <Routes>
@@ -19,7 +19,7 @@ function App() {
           <Route path='/agregar-paciente' element={<AgregarPaciente />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

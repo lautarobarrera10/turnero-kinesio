@@ -16,7 +16,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 import { Link } from "react-router-dom";
 
-const pages = [{ text:'Agregar paciente', path: '/agregar-paciente' }];
+const pages = [
+  { text:'Agregar paciente', path: '/agregar-paciente' },
+  { text:'Registrar usuario', path: '/register' }
+];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {

@@ -20,7 +20,11 @@ const Register = () => {
             justifyContent:'center',
             alignItems:'center',
         }}>
-            <Box component="form" onSubmit={registerUser} sx={{
+            <Box 
+            component="form"
+            type='POST'
+            onSubmit={registerUser} 
+            sx={{
                 mt:4,
                 width:'400px',
                 display:'flex',
@@ -28,12 +32,8 @@ const Register = () => {
                 gap:1
             }}>
                 <h1>Registro</h1>
-                <TextField required id="name" label="Nombre" variant="outlined" type="text"/>
-                <TextField required id="lastname" label="Apellido" variant="outlined" type="text"/>
+                <TextField required id="username" label="Nombre de usuario" variant="outlined" type="text"/>
                 <TextField required id="email" label="Email" variant="outlined" type="email"/>
-                <TextField required id="password" label="Contraseña" variant="outlined" type="password"/>
-                <TextField required id="re-password" label="Repetir contraseña" variant="outlined" type="password"/>
-                {rePasswordError && <p className='text-error'>Las contraseñas no coinciden.</p>}
                 <Button type="submit" sx={{mt:4}} variant="contained">Registrarse</Button>
             </Box>
         </Container>
